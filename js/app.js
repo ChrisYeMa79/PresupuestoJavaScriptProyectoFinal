@@ -1,17 +1,21 @@
-// Función para calcular total de ingresos
+// Arreglos de prueba
+let ingresos = [9000, 400];
+let egresos = [900, 400];
+
+// Función totalIngresos
 const totalIngresos = () => {
     let totalIngreso = 0;
     for (let ingreso of ingresos) {
-        totalIngreso += ingreso.valor; // ajusta "valor" según tu objeto
+        totalIngreso += ingreso;
     }
     return totalIngreso;
 };
 
-// Función para calcular total de egresos
+// Función totalEgresos
 const totalEgresos = () => {
     let totalEgreso = 0;
-    for (let i = 0; i < egresos.length; i++) {
-        totalEgreso += egresos[i].valor; // ajusta "valor" según tu objeto
+    for (let egreso of egresos) {
+        totalEgreso += egreso;
     }
     return totalEgreso;
 };
@@ -21,8 +25,32 @@ const cargarCabecero = () => {
     let presupuesto = totalIngresos() - totalEgresos();
     let porcentajeEgreso = totalEgresos() / totalIngresos();
 
-    console.log("Presupuesto:", presupuesto);
-    console.log("Porcentaje de egreso:", porcentajeEgreso);
+    console.log(presupuesto);
+    console.log(porcentajeEgreso);
+    console.log(totalIngresos());
+    console.log(totalEgresos());
 };
 
-    
+// Ejecutar
+cargarCabecero();
+
+const formatoMoneda = (valor) => {
+    return valor.toLocaleString('es-MX', {
+        style: 'currency',
+        currency: 'MXN',
+        minimumFractionDigits: 2
+    });
+};
+
+const formatoPorcentaje = (valor) => {
+    return valor.toLocaleString('es-MX', {
+        style: 'percent',
+        minimumFractionDigits: 2
+    });
+};
+
+console.log(formatoMoneda(8100)); 
+// $8,100.00
+
+console.log(formatoPorcentaje(0.1304)); 
+// 13.04%
