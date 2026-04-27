@@ -1,56 +1,100 @@
-// Arreglos de prueba
-let ingresos = [9000, 400];
-let egresos = [900, 400];
+import Ingreso from './Ingreso.js';
+import Egreso from './Egreso.js';
 
-// Función totalIngresos
+// =====================
+// Arreglos principales
+// =====================
+const ingresos = [
+    new Ingreso('Salario', 20000),
+    new Ingreso('Venta auto', 50000)
+];
+
+const egresos = [
+    new Egreso('Renta', 4000),
+    new Egreso('Ropa', 800)
+];
+
+// =====================
+// Función total ingresos
+// =====================
 const totalIngresos = () => {
-    let totalIngreso = 0;
+    let totalIngresos = 0;
+
     for (let ingreso of ingresos) {
-        totalIngreso += ingreso;
+        totalIngresos += ingreso.valor;
     }
-    return totalIngreso;
+
+    return totalIngresos;
 };
 
-// Función totalEgresos
+// =====================
+// Función total egresos
+// =====================
 const totalEgresos = () => {
-    let totalEgreso = 0;
+    let totalEgresos = 0;
+
     for (let egreso of egresos) {
-        totalEgreso += egreso;
+        totalEgresos += egreso.valor;
     }
-    return totalEgreso;
+
+    return totalEgresos;
 };
 
+// =====================
 // Función cargarCabecero
+// =====================
 const cargarCabecero = () => {
     let presupuesto = totalIngresos() - totalEgresos();
-    let porcentajeEgreso = totalEgresos() / totalIngresos();
+    let porcentajeEgreso = totalIngresos() > 0 
+        ? totalEgresos() / totalIngresos() 
+        : 0;
 
-    console.log(presupuesto);
-    console.log(porcentajeEgreso);
-    console.log(totalIngresos());
-    console.log(totalEgresos());
+    // Actualizar HTML
+    document.getElementById('presupuesto').innerHTML = formatoMoneda(presupuesto);
+
+    document.getElementById('porcentaje').innerHTML = formatoPorcentaje(porcentajeEgreso);
+
+    document.getElementById('ingresos').innerHTML = formatoMoneda(totalIngresos());
+
+    document.getElementById('egresos').innerHTML = formatoMoneda(totalEgresos());
+};
+const cargarApp = () => {
+    cargarCabecero();
 };
 
-// Ejecutar
+
+// Ejecutar prueba
 cargarCabecero();
 
-const formatoMoneda = (valor) => {
-    return valor.toLocaleString('es-MX', {
-        style: 'currency',
-        currency: 'MXN',
-        minimumFractionDigits: 2
-    });
+const agregarDato = () => {
+    const forma = document.getElementById('forma');
+
+    const tipo = forma['tipo'].value;
+    const descripcion = forma['descripcion'].value;
+    const valor = forma['valor'].value;
+
+    // Validación
+    if (descripcion !== '' && valor !== '') {
+
+        if (tipo === 'ingreso') {
+            ingresos.push({
+                id: ingresos.length + 1,
+                descripcion: descripcion,
+                valor: Number(valor)
+            });
+
+            cargarCabecero();
+            cargarIngresos();
+
+        } else if (tipo === 'egreso') {
+            egresos.push({
+                id: egresos.length + 1,
+                descripcion: descripcion,
+                valor: Number(valor)
+            });
+
+            cargarCabecero();
+            cargarEgresos();
+        }
+    }
 };
-
-const formatoPorcentaje = (valor) => {
-    return valor.toLocaleString('es-MX', {
-        style: 'percent',
-        minimumFractionDigits: 2
-    });
-};
-
-console.log(formatoMoneda(8100)); 
-// $8,100.00
-
-console.log(formatoPorcentaje(0.1304)); 
-// 13.04%
