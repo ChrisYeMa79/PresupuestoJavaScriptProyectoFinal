@@ -1,8 +1,10 @@
 class Dato {
     constructor(descripcion, valor) {
-        this._descripcion = descripcion;
-        this._valor = valor;
+        this.id = Math.random();
+        this.descripcion = descripcion;
+        this.valor = valor;
     }
+
 
     // Getter de descripción
     get descripcion() {
@@ -25,4 +27,3 @@ class Dato {
     }
 }
 
-export default Dato;
