@@ -65,6 +65,8 @@ const cargarCabecero = () => {
         ? totalEgresos() / totalIngresos()
         : 0;
 
+    if(totalIngresos() === 0 && totalEgresos() > 0){ porcentajeEgreso = 1;}
+
     document.getElementById('presupuesto').innerHTML = formatoMoneda(presupuesto);
     document.getElementById('ingresos').innerHTML = formatoMoneda(totalIngresos());
     document.getElementById('egresos').innerHTML = formatoMoneda(totalEgresos());
@@ -107,6 +109,7 @@ const eliminarIngreso = (id) => {
     ingresos.splice(indiceEliminar, 1);
     cargarCabecero();
     cargarIngresos();
+    cargarEgresos();
 };
 
 
@@ -173,6 +176,7 @@ const agregarDato = () => {
                 valor: Number(valor)
             });
             cargarIngresos();
+            cargarEgresos();
 
         } else if (tipo === 'egreso') {
             egresos.push({
@@ -198,3 +202,5 @@ const cargarApp = () => {
     cargarIngresos();
     cargarEgresos();
 };
+
+cargarApp();

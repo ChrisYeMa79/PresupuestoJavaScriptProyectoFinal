@@ -257,3 +257,14 @@ h2 {
 .elemento:hover .elemento_valor { transform: translateX(-20px); }
 .elemento:hover .elemento_porcentaje { transform: translateX(-20px); }
 
+
+.elemento_eliminar {
+    opacity: 0;
+    pointer-events: none;   /* Evita clics cuando está oculto */
+    transition: opacity 0.2s ease;
+}
+
+.elemento:hover .elemento_eliminar {
+    opacity: 1;
+    pointer-events: auto;
+}
